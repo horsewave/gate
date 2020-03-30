@@ -1,5 +1,20 @@
+######################
+#Description:  a cylindrical background source, four small hot spheres and two biggest cold spheres.
+  # the activity ratio between hot spheres and the background is: 8:1
+ # the activity of the background is 10Bq/mm3, and that of the hot spheres is 80bq/mm3
+
+#Editor:Bo Ma
+#date:2020/03/30 
+#Email:mabo@ihep.ac.cn
+#Tel:010-88235869
+#Cell:15210606357
+
+# Version:v1.0
+######################
+
+
 /gate/source/addSource   background
-/gate/source/background/setActivity   145277 becquerel
+/gate/source/background/setActivity   144799 becquerel
 /gate/source/background/gps/particle  gamma
 /gate/source/background/gps/energytype Mono
 /gate/source/background/setType backtoback

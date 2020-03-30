@@ -1,7 +1,8 @@
 ################for C++#######################
-this_git_manage.sh
+git_manage.sh
+
 
 # for folders, you should only use the name,not the path
-
+tags
 results
 phantom_source_lib

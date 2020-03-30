@@ -17,6 +17,20 @@
 #  The following phantom is Gate representation of the 
 #  NEMA 2-2001 IQ Phantom.  The dimensions of this phantom 
 #  are taken directly from "NEMA NU 2, Chapter 7, 2001".
+
+#---------------
+#Description: NEMA phantom with all the materials setting to vacuum 
+# to eliminate the effects of scaater and attenuation.
+
+#Editor:Bo Ma
+#date:2020/03/30 
+#Email:mabo@ihep.ac.cn
+#Tel:010-88235869
+#Cell:15210606357
+
+#Version:v1.0
+#---------------
+
 #  
 #   
 #       P H A N T O M   G E O M E T R Y
