@@ -1,0 +1,96 @@
+###################
+#  Visualisation  #
+###################
+
+/vis/disable
+#/control/execute visu.mac
+
+# V E R B O S I T Y
+
+/control/verbose 0
+/run/verbose 1
+#/event/verbose 0
+#/tracking/verbose 0
+#/gate/application/verbose 0
+#/gate/generator/verbose 0
+#/gate/stacking/verbose 0
+#/gate/event/verbose 0
+#/gate/source/verbose 0
+#/gate/output/verbose 2
+
+
+
+#/gate/geometry/enableAutoUpdate
+
+######################################
+# Step 1: Defining a scanner geometry#
+######################################
+
+#####################
+#  Mandatory  fGate #
+#####################
+/gate/geometry/setMaterialDatabase {PATH_GATE_MACRO}/GateMaterials.db
+
+#############
+#   World   #
+#############
+/gate/world/geometry/setXLength 500. cm
+/gate/world/geometry/setYLength 500. cm
+/gate/world/geometry/setZLength 100. cm
+
+/gate/world/setMaterial Vacuum
+#/gate/world/vis/forceWireframe
+
+
+##############################
+#   cylindricalPET scanner   #
+##############################
+
+/control/execute {PATH_GATE_MACRO}/camera.mac
+
+
+
+###################################################################
+#  Second step: Defining a phantom geometry: Voxellized phantom   #
+####################################################################
+
+/control/execute {PATH_GATE_MACRO}/phantom.mac
+
+
+###############################################
+# Third step: Setting-up the physics processes #
+##############################################
+
+/control/execute {PATH_GATE_MACRO}/physics.mac
+
+#######################################
+# Fourth step: Initialization#
+#######################################
+/gate/run/initialize
+
+
+#######################################
+# Fifth step: Setting-up the digitizer#
+#######################################
+
+/control/execute {PATH_GATE_MACRO}/digitizer.mac
+
+
+
+##################################################################
+#    Sixth step: Setting-up the source: voxelized Brain source   #
+##################################################################
+
+/control/execute {PATH_GATE_MACRO}/source.mac
+
+
+#######################################################################
+#   Seventh step: Defining data output  &   Starting an acquisition#
+######################################################################
+
+/control/execute {PATH_GATE_MACRO}/output_and_run.mac
+
+#######################################################################
+#  end 
+######################################################################
+

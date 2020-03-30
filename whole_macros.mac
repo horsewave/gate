@@ -1,0 +1,403 @@
+
+###################
+#  Visualisation  #
+###################
+
+#/vis/disable
+/control/execute visu.mac
+
+# V E R B O S I T Y
+
+/control/verbose 0
+/run/verbose 1
+#/event/verbose 0
+#/tracking/verbose 0
+#/gate/application/verbose 0
+#/gate/generator/verbose 0
+#/gate/stacking/verbose 0
+#/gate/event/verbose 0
+#/gate/source/verbose 0
+#/gate/output/verbose 2
+
+#***************************************************************************************
+
+# V I S U A L I S A T I O N and G E O M E T R Y  
+
+#/gate/geometry/enableAutoUpdate
+
+######################################
+# Step 1: Defining a scanner geometry#
+######################################
+
+#####################
+#  Mandatory  fGate #
+#####################
+/gate/geometry/setMaterialDatabase ./GateMaterials.db
+
+#############
+#   World   #
+#############
+/gate/world/geometry/setXLength 500. cm
+/gate/world/geometry/setYLength 500. cm
+/gate/world/geometry/setZLength 100. cm
+
+/gate/world/setMaterial Vacuum
+#/gate/world/vis/forceWireframe
+
+
+##############################
+#   cylindricalPET scanner   #
+##############################
+
+/gate/world/daughters/name cylindricalPET
+/gate/world/daughters/insert cylinder
+/gate/cylindricalPET/placement/setTranslation 0.0 0.0 0.0 mm
+/gate/cylindricalPET/geometry/setRmax   475.   mm
+/gate/cylindricalPET/geometry/setRmin   438.   mm
+/gate/cylindricalPET/geometry/setHeight 216.32 mm
+/gate/cylindricalPET/setMaterial Air
+/gate/cylindricalPET/vis/forceWireframe
+/gate/cylindricalPET/vis/setColor cyan
+/gate/cylindricalPET/vis/setVisible 			1
+
+##############################
+#   Cassette  #
+##############################
+
+/gate/cylindricalPET/daughters/name head
+/gate/cylindricalPET/daughters/insert box
+/gate/head/placement/setTranslation 450.5 0.0 0.0 mm
+/gate/head/geometry/setXLength 25.    mm
+/gate/head/geometry/setYLength 54.    mm
+/gate/head/geometry/setZLength 216.32 mm
+/gate/head/setMaterial Air
+/gate/head/vis/setColor blue
+/gate/head/vis/forceWireframe
+#/gate/head/vis/setVisible 0
+
+	
+#	MODULE
+#/gate/head/daughters/name module
+#/gate/head/daughters/insert box
+#/gate/module/placement/setTranslation 0.0 0.0 0.0 cm
+#/gate/module/geometry/setXLength 30. mm
+#/gate/module/geometry/setYLength 48. mm
+#/gate/module/geometry/setZLength 24. mm
+#/gate/module/setMaterial Air
+#/gate/module/vis/setColor blue
+##/gate/module/vis/forceWireframe
+#/gate/module/vis/setVisible 0
+
+
+##############################
+#   Block  #
+##############################
+
+/gate/head/daughters/name block
+/gate/head/daughters/insert box
+/gate/block/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/block/geometry/setXLength 25. mm
+/gate/block/geometry/setYLength 54. mm
+/gate/block/geometry/setZLength 54. mm
+/gate/block/setMaterial Polyethylene
+/gate/block/vis/setColor green
+/gate/block/vis/forceWireframe 
+#/gate/block/vis/setVisible 0
+
+##############################
+#   Crystal  #
+##############################
+#/gate/block/daughters/name crystal
+#/gate/block/daughters/insert box
+#/gate/crystal/placement/setTranslation 0.0 0.0 0.0 cm
+#/gate/crystal/geometry/setXLength 25. mm
+#/gate/crystal/geometry/setYLength 3.6  mm
+#/gate/crystal/geometry/setZLength 3.6  mm
+##/gate/crystal/setMaterial Polyethylene 
+#/gate/crystal/vis/setColor yellow
+##/gate/crystal/vis/setVisible 0
+
+/gate/block/daughters/name LYSO
+/gate/block/daughters/insert box
+/gate/LYSO/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/LYSO/geometry/setXLength  25. mm
+/gate/LYSO/geometry/setYLength  3.5 mm
+/gate/LYSO/geometry/setZLength  3.5 mm
+/gate/LYSO/setMaterial LYSO
+/gate/LYSO/vis/setColor red
+
+
+
+#	R E P E A T    C R Y S T A L
+/gate/LYSO/repeaters/insert cubicArray
+/gate/LYSO/cubicArray/setRepeatNumberX 1
+/gate/LYSO/cubicArray/setRepeatNumberY 15
+/gate/LYSO/cubicArray/setRepeatNumberZ 15
+/gate/LYSO/cubicArray/setRepeatVector 0.0 3.6 3.6 mm
+
+
+#	R E P E A T    BLOCK
+/gate/block/repeaters/insert cubicArray
+/gate/block/cubicArray/setRepeatNumberX 1
+/gate/block/cubicArray/setRepeatNumberY 1
+/gate/block/cubicArray/setRepeatNumberZ 4
+/gate/block/cubicArray/setRepeatVector 0.0 0.0 54.08 mm
+
+#	R E P E A T MODULE
+#/gate/module/repeaters/insert cubicArray
+#/gate/module/cubicArray/setRepeatNumberX 1
+#/gate/module/cubicArray/setRepeatNumberY 2
+#/gate/module/cubicArray/setRepeatNumberZ 3
+#/gate/module/cubicArray/setRepeatVector 0.0 48.0 24.0 mm
+
+#	R E P E A T HEAD
+/gate/head/repeaters/insert ring
+/gate/head/ring/setRepeatNumber 48
+
+#/gate/cylindricalPET/moves/insert orbiting
+#/gate/cylindricalPET/orbiting/setSpeed .1875 deg/s
+#/gate/cylindricalPET/orbiting/setPoint1 0 0 0 cm
+#/gate/cylindricalPET/orbiting/setPoint2 0 0 1 cm
+
+
+#	A T T A C H    S Y S T E M 
+/gate/systems/cylindricalPET/rsector/attach head
+/gate/systems/cylindricalPET/module/attach block
+#/gate/systems/cylindricalPET/module/attach module
+#/gate/systems/cylindricalPET/submodule/attach block
+/gate/systems/cylindricalPET/crystal/attach LYSO
+#/gate/systems/cylindricalPET/layer0/attach LSO
+#/gate/systems/cylindricalPET/layer1/attach BGO
+
+#	A T T A C H    C R Y S T A L  SD
+
+#/gate/crystal/attachCrystalSD
+/gate/LYSO/attachCrystalSD
+
+/gate/systems/cylindricalPET/describe
+
+
+
+###################################################################
+#  Second step: Defining a phantom geometry: Voxellized phantom   #
+####################################################################
+#
+#  The following phantom is Gate representation of the 
+#  NEMA 2-2001 IQ Phantom.  The dimensions of this phantom 
+#  are taken directly from "NEMA NU 2, Chapter 7, 2001".
+#  
+#   
+#       P H A N T O M   G E O M E T R Y
+/gate/world/daughters/name NEMA_IQ
+/gate/world/daughters/insert cylinder
+/gate/NEMA_IQ/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/NEMA_IQ/geometry/setRmax 41.05  cm
+/gate/NEMA_IQ/geometry/setRmin 0.     cm
+/gate/NEMA_IQ/geometry/setHeight 21.4 cm
+/gate/NEMA_IQ/geometry/setPhiStart 0.   deg
+/gate/NEMA_IQ/geometry/setDeltaPhi 360. deg
+/gate/NEMA_IQ/setMaterial Water 
+
+/gate/NEMA_IQ/vis/forceWireframe
+#/gate/NEMA_IQ/vis/forceSolid
+/gate/NEMA_IQ/vis/setColor green
+/gate/NEMA_IQ/vis/setVisible 1
+
+/gate/NEMA_IQ/daughters/name cold_backgroud
+/gate/NEMA_IQ/daughters/insert cylinder
+/gate/cold_backgroud/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/cold_backgroud/geometry/setRmax 41. cm
+/gate/cold_backgroud/geometry/setRmin  0. cm
+/gate/cold_backgroud/geometry/setHeight 21.4 cm
+/gate/cold_backgroud/geometry/setPhiStart 0.   deg
+/gate/cold_backgroud/geometry/setDeltaPhi 360. deg
+/gate/cold_backgroud/setMaterial Air
+
+#/gate/cold_backgroud/vis/forceWireframe
+/gate/cold_backgroud/vis/forceSolid
+/gate/cold_backgroud/vis/setColor red
+/gate/cold_backgroud/vis/setVisible 1
+
+/gate/NEMA_IQ/attachPhantomSD
+
+
+
+
+###############################################
+# Third step: Setting-up the physics processes #
+##############################################
+
+/gate/physics/addProcess PhotoElectric
+/gate/physics/processes/PhotoElectric/setModel StandardModel
+
+/gate/physics/addProcess Compton
+/gate/physics/processes/Compton/setModel StandardModel
+
+/gate/physics/addProcess RayleighScattering
+/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+
+/gate/physics/addProcess ElectronIonisation
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e+
+
+/gate/physics/addProcess Bremsstrahlung
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e+
+
+/gate/physics/addProcess PositronAnnihilation
+
+/gate/physics/addProcess MultipleScattering e+
+/gate/physics/addProcess MultipleScattering e-
+
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+
+#
+#       C U T S
+#
+# Cuts for particle in NEMACylinder
+#/gate/physics/Gamma/SetCutInRegion      sphere 1.0 cm
+#/gate/physics/Electron/SetCutInRegion   sphere 1.0 cm
+#/gate/physics/Positron/SetCutInRegion   sphere 1.0 cm
+
+# Cuts for particle in NEMACylinder
+#/gate/physics/Gamma/SetCutInRegion      LSO 1.0 cm
+#/gate/physics/Electron/SetCutInRegion   LSO 1.0 cm
+#/gate/physics/Positron/SetCutInRegion   LSO 1.0 cm
+
+# Cuts for particle in NEMACylinder
+#/gate/physics/Gamma/SetCutInRegion      LYSO 1.0 cm
+/gate/physics/Electron/SetCutInRegion   LYSO 1.0 cm
+/gate/physics/Positron/SetCutInRegion   LYSO 1.0 cm
+
+#######################################
+# Fourth step: Initialization#
+#######################################
+
+/gate/run/initialize
+
+
+
+
+#######################################
+# Fifth step: Setting-up the digitizer#
+#######################################
+
+#	D I G I T I Z E R 
+/gate/digitizer/Singles/insert adder
+/gate/digitizer/Singles/insert readout
+/gate/digitizer/Singles/readout/setDepth 1
+
+/gate/digitizer/Singles/insert blurring
+/gate/digitizer/Singles/blurring/setResolution 0.21
+/gate/digitizer/Singles/blurring/setEnergyOfReference 511. keV
+
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 361. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 661. keV
+
+#       T I M E     R E S O L U S I O N 
+/gate/digitizer/Singles/insert timeResolution 
+/gate/digitizer/Singles/timeResolution/setTimeResolution 500. ps 
+
+#	C O I N C I    S O R T E R 
+/gate/digitizer/Coincidences/setWindow 6. ns
+/gate/digitizer/Coincidences/minSectorDifference  10 
+/gate/digitizer/Coincidences/MultiplesPolicy  killAll 
+
+/gate/digitizer/name delay
+/gate/digitizer/insert coincidenceSorter
+/gate/digitizer/delay/setWindow 6. ns
+/gate/digitizer/delay/setOffset 500. ns
+/gate/digitizer/delay/minSectorDifference 14 
+/gate/digitizer/delay/MultiplesPolicy  killAll  
+#/gate/digitizer/delay/MultiplesPolicy  takeWinnerOfGoods
+
+
+
+##################################################################
+#    Sixth step: Setting-up the source: voxelized Brain source   #
+##################################################################
+
+/gate/source/addSource   background
+/gate/source/background/setActivity  0.000386136 Ci 
+/gate/source/background/gps/particle  e+
+/gate/source/background/setForcedUnstableFlag  true
+/gate/source/background/setForcedHalfLife 23410080. s
+#/gate/source/background/gps/energytype Gallium68 
+/gate/source/background/gps/energytype Fluor18 
+#/gate/source/background/gps/energytype Oxygen15 
+#/gate/source/background/gps/energytype Carbon11 
+/gate/source/background/gps/type   Volume
+/gate/source/background/gps/shape  Cylinder
+/gate/source/background/gps/radius 41.05 cm
+/gate/source/background/gps/halfz  10.7 cm
+/gate/source/background/gps/angtype  iso
+/gate/source/background/gps/centre  0.0 0.0 0.0 cm
+/gate/source/background/gps/Forbid cold_backgroud 
+#/gate/source/background/dump 1
+
+
+/gate/source/background/visualize 2000 yellow 3
+
+/gate/source/list
+
+
+########################################
+#   Seventh step: Defining data output  #
+#######################################
+
+#/gate/output/allowNoOutput
+
+/gate/output/ascii/enable
+/gate/output/ascii/setFileName image0
+/gate/output/ascii/setOutFileSizeLimit  900000000000
+/gate/output/ascii/setOutFileHitsFlag 0
+/gate/output/ascii/setOutFileSinglesFlag 0
+/gate/output/ascii/setOutFileCoincidencesFlag 1
+/gate/output/ascii/setOutFiledelayFlag 1
+
+/gate/output/root/enable
+#/gate/output/root/disable
+/gate/output/root/setFileName image0
+/gate/output/root/setRootHitFlag 0
+/gate/output/root/setRootSinglesFlag 0
+/gate/output/root/setRootCoincidencesFlag 1
+/gate/output/root/setRootdelayFlag 1
+
+
+########################################
+#   Eighth step: Starting an acquisition #
+#######################################
+
+#   R A N D O M
+# JamesRandom Ranlux64 MersenneTwister
+/gate/random/setEngineName MersenneTwister
+#/gate/random/setEngineSeed default
+/gate/random/setEngineSeed auto
+#/gate/random/setEngineSeed 123456789
+#/gate/random/resetEngineFrom fileName
+/gate/random/verbose 1
+
+
+
+#       S T A R T
+/gate/application/setTimeSlice     0.0005   s
+/gate/application/setTimeStart     0.     s
+/gate/application/setTimeStop      0.0005   s
+
+#/gate/application/setTotalNumberOfPrimaries 1000
+#/gate/application/setTotalNumberOfPrimaries 10000000
+#/gate/application/setTotalNumberOfPrimaries 1000000
+#/gate/application/setTotalNumberOfPrimaries 10000000
+#/gate/application/setNumberOfPrimariesPerRun 100
+
+
+#/gate/application/setTimeSlice 3600 s
+#/gate/application/setTimeStop 3600 s
+####/gate/application/startDAQCluster 3599 3600 0 s
+/gate/application/startDAQ
+
+
+

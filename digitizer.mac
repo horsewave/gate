@@ -1,0 +1,30 @@
+#	D I G I T I Z E R 
+/gate/digitizer/Singles/insert adder
+/gate/digitizer/Singles/insert readout
+/gate/digitizer/Singles/readout/setDepth 1
+
+/gate/digitizer/Singles/insert blurring
+/gate/digitizer/Singles/blurring/setResolution 0.21
+/gate/digitizer/Singles/blurring/setEnergyOfReference 511. keV
+
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 361. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 661. keV
+
+#  T I M E     R E S O L U S I O N 
+/gate/digitizer/Singles/insert timeResolution 
+/gate/digitizer/Singles/timeResolution/setTimeResolution {TOF}. ps 
+
+#	C O I N C I    S O R T E R 
+/gate/digitizer/Coincidences/setWindow 6. ns
+/gate/digitizer/Coincidences/minSectorDifference  10 
+/gate/digitizer/Coincidences/MultiplesPolicy  killAll 
+
+/gate/digitizer/name delay
+/gate/digitizer/insert coincidenceSorter
+/gate/digitizer/delay/setWindow 6. ns
+/gate/digitizer/delay/setOffset 500. ns
+/gate/digitizer/delay/minSectorDifference 14 
+/gate/digitizer/delay/MultiplesPolicy  killAll  
+#/gate/digitizer/delay/MultiplesPolicy  takeWinnerOfGoods

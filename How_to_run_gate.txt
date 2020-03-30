@@ -1,0 +1,53 @@
+"""""""""""""""""""""""""""""""""""""""""""""""
+ Description: How to run GATE simulation for JD-PET? 
+ Editor:Bo Ma
+ date:2020-03-30
+ Email:mabo@ihep.ac.cn
+ Tel:010-88235869
+ Cell:15210606357
+""""""""""""""""""""""""""""""""""""""""""""""""
+This doc shows how to run GATE locally and using IHEP cluster, the detailed setup for GATE simulation can be found directely in the running macrso.
+
+1: run GATE in local cpu
+1): the executive shell script is: run_gate_simulation_local.sh
+  You need to set some parameters in it, including: 
+
+   a): the time resolutin: TIME_RES
+   b): your GATE macros path: PATH_GATE_MACRO;
+   c): the simulation output name:  OUTPUT_NAME
+   d): gamma photon number for each core:GAMMA_NUM     
+   e): for Local running, the path is set as relative path, just for convinience.
+
+2): different phantom and sources can be found in the ./phantom_source_lib 
+
+3): The simulation results are saved in the ./results.
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+2: Run gate in the IHEP cluster
+  1): the main executive is: ./ihep_cluster_multicore_job_pbs.sh where you need to set the CPU number you are about to use:CPU_NUM and the simulation log path where you running log is saved. 
+  
+  2): qsub can not use multithreads, so the actually running script is : ./ihep_cluster_singlecore_job_pbs.sh  which is called by 1).
+      You need to set parameters including:
+      a): the time resolutin: TIME_RES
+      b): your GATE macros path: PATH_GATE_MACRO;
+      c): the simulation output name:  OUTPUT_NAME
+      d): gamma photon number for each core:GAMMA_NUM   
+    note: all the paths should be the absolute path, not the relative path, otherwise you will be really miseralble.
+
+  3) After you have set up all the parameters in your local computer, then you can copy it to the ihep cluster using the following commands:
+
+  scp -rv * mabo@192.168.180.21:/data/simulation/home/mabo/software/src/gate/ihep_human_tof_pet_jd/
+
+  4): submit your job: 
+    source ihep_cluster_multicore_job_pbs.sh
+  
+  5): use qstat to check your job; 
+
+  6): use qdel to stop your job; 
+
+  7): After the simulation, copy the data back to your local desk using:
+    scp -rv  mabo@192.168.180.21:/data/simulation/home/mabo/software/src/gate/ihep_human_tof_pet_jd/results/* ./
+
+ 8) Now everything is done, you can upload the results using IHEPBOX.
+

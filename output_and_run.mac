@@ -1,0 +1,45 @@
+#   O U T P U T
+/gate/output/ascii/enable
+/gate/output/ascii/setFileName {OUTPUT_NAME}
+/gate/output/ascii/setOutFileSizeLimit  400000000000
+/gate/output/ascii/setOutFileHitsFlag 0
+/gate/output/ascii/setOutFileSinglesFlag 0
+/gate/output/ascii/setOutFileCoincidencesFlag 1
+/gate/output/ascii/setOutFiledelayFlag 1
+
+/gate/output/root/enable
+#/gate/output/root/disable
+/gate/output/root/setFileName {OUTPUT_NAME}
+/gate/output/root/setRootHitFlag 0
+/gate/output/root/setRootSinglesFlag 0
+/gate/output/root/setRootCoincidencesFlag 1
+/gate/output/root/setRootdelayFlag 1
+
+#   R A N D O M
+# JamesRandom Ranlux64 MersenneTwister
+/gate/random/setEngineName MersenneTwister
+#/gate/random/setEngineSeed default
+/gate/random/setEngineSeed auto
+#/gate/random/setEngineSeed 123456750
+#/gate/random/resetEngineFrom fileName
+/gate/random/verbose 1
+
+#       S T A R T
+/gate/application/setTimeSlice     10  s
+/gate/application/setTimeStart     0.     s
+/gate/application/setTimeStop      10   s
+
+/gate/application/setTotalNumberOfPrimaries  {GAMMA_NUM} 
+#/gate/application/setTotalNumberOfPrimaries 10000000
+#/gate/application/setTotalNumberOfPrimaries 1000000
+#/gate/application/setTotalNumberOfPrimaries 10000000
+#/gate/application/setNumberOfPrimariesPerRun 100
+
+
+##gate/application/setTimeSlice 3600 s
+#/gate/application/setTimeStop 3600 s
+####/gate/application/startDAQCluster 3599 3600 0 s
+/gate/application/startDAQ
+
+
+

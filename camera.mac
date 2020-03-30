@@ -1,0 +1,121 @@
+#	CYLINDRICAL
+/gate/world/daughters/name cylindricalPET
+/gate/world/daughters/insert cylinder
+/gate/cylindricalPET/placement/setTranslation 0.0 0.0 0.0 mm
+/gate/cylindricalPET/geometry/setRmax   475.   mm
+/gate/cylindricalPET/geometry/setRmin   438.   mm
+/gate/cylindricalPET/geometry/setHeight 216.32 mm
+/gate/cylindricalPET/setMaterial Air
+/gate/cylindricalPET/vis/forceWireframe
+/gate/cylindricalPET/vis/setColor white
+
+#	HEAD
+/gate/cylindricalPET/daughters/name head
+/gate/cylindricalPET/daughters/insert box
+/gate/head/placement/setTranslation 450.5 0.0 0.0 mm
+/gate/head/geometry/setXLength 25.    mm
+/gate/head/geometry/setYLength 54.    mm
+/gate/head/geometry/setZLength 216.32 mm
+/gate/head/setMaterial Air
+/gate/head/vis/setColor blue
+/gate/head/vis/forceWireframe
+#/gate/head/vis/setVisible 0
+
+#	MODULE
+#/gate/head/daughters/name module
+#/gate/head/daughters/insert box
+#/gate/module/placement/setTranslation 0.0 0.0 0.0 cm
+#/gate/module/geometry/setXLength 30. mm
+#/gate/module/geometry/setYLength 48. mm
+#/gate/module/geometry/setZLength 24. mm
+#/gate/module/setMaterial Air
+#/gate/module/vis/setColor blue
+##/gate/module/vis/forceWireframe
+#/gate/module/vis/setVisible 0
+
+#	BLOCK
+/gate/head/daughters/name block
+/gate/head/daughters/insert box
+/gate/block/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/block/geometry/setXLength 25. mm
+/gate/block/geometry/setYLength 54. mm
+/gate/block/geometry/setZLength 54. mm
+/gate/block/setMaterial Polyethylene
+/gate/block/vis/setColor blue 
+/gate/block/vis/forceWireframe 
+#/gate/block/vis/setVisible 0
+
+#	C R Y S T A L
+#/gate/block/daughters/name crystal
+#/gate/block/daughters/insert box
+#/gate/crystal/placement/setTranslation 0.0 0.0 0.0 cm
+#/gate/crystal/geometry/setXLength 25. mm
+#/gate/crystal/geometry/setYLength 3.6  mm
+#/gate/crystal/geometry/setZLength 3.6  mm
+##/gate/crystal/setMaterial Polyethylene 
+#/gate/crystal/vis/setColor yellow
+##/gate/crystal/vis/setVisible 0
+
+/gate/block/daughters/name LYSO
+/gate/block/daughters/insert box
+/gate/LYSO/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/LYSO/geometry/setXLength  25. mm
+/gate/LYSO/geometry/setYLength  3.5 mm
+/gate/LYSO/geometry/setZLength  3.5 mm
+# there is something wrong with the material LYSO(density is much lower), SO 
+# here I use LSO instead.
+/gate/LYSO/setMaterial LSO
+#/gate/block/vis/forceWireframe 
+/gate/LYSO/vis/forceSolid 
+/gate/LYSO/vis/setColor green
+/gate/LYSO/vis/setVisible 1
+
+#	R E P E A T    C R Y S T A L
+/gate/LYSO/repeaters/insert cubicArray
+/gate/LYSO/cubicArray/setRepeatNumberX 1
+/gate/LYSO/cubicArray/setRepeatNumberY 15
+/gate/LYSO/cubicArray/setRepeatNumberZ 15
+/gate/LYSO/cubicArray/setRepeatVector 0.0 3.6 3.6 mm
+
+
+#	R E P E A T    BLOCK
+/gate/block/repeaters/insert cubicArray
+/gate/block/cubicArray/setRepeatNumberX 1
+/gate/block/cubicArray/setRepeatNumberY 1
+/gate/block/cubicArray/setRepeatNumberZ 4
+/gate/block/cubicArray/setRepeatVector 0.0 0.0 54.08 mm
+
+#	R E P E A T MODULE
+#/gate/module/repeaters/insert cubicArray
+#/gate/module/cubicArray/setRepeatNumberX 1
+#/gate/module/cubicArray/setRepeatNumberY 2
+#/gate/module/cubicArray/setRepeatNumberZ 3
+#/gate/module/cubicArray/setRepeatVector 0.0 48.0 24.0 mm
+
+#	R E P E A T HEAD
+/gate/head/repeaters/insert ring
+/gate/head/ring/setRepeatNumber 48
+
+#/gate/cylindricalPET/moves/insert orbiting
+#/gate/cylindricalPET/orbiting/setSpeed .1875 deg/s
+#/gate/cylindricalPET/orbiting/setPoint1 0 0 0 cm
+#/gate/cylindricalPET/orbiting/setPoint2 0 0 1 cm
+
+
+#	A T T A C H    S Y S T E M 
+/gate/systems/cylindricalPET/rsector/attach head
+/gate/systems/cylindricalPET/module/attach block
+#/gate/systems/cylindricalPET/module/attach module
+#/gate/systems/cylindricalPET/submodule/attach block
+/gate/systems/cylindricalPET/crystal/attach LYSO
+#/gate/systems/cylindricalPET/layer0/attach LSO
+#/gate/systems/cylindricalPET/layer1/attach BGO
+
+#	A T T A C H    C R Y S T A L  SD
+
+#/gate/crystal/attachCrystalSD
+/gate/LYSO/attachCrystalSD
+
+/gate/systems/cylindricalPET/describe
+
+

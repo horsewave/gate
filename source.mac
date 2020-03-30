@@ -1,0 +1,100 @@
+/gate/source/addSource   background
+/gate/source/background/setActivity   145277 becquerel
+/gate/source/background/gps/particle  gamma
+/gate/source/background/gps/energytype Mono
+/gate/source/background/setType backtoback
+/gate/source/background/gps/monoenergy 0.511 MeV
+/gate/source/background/gps/type   Volume
+/gate/source/background/gps/shape  Cylinder
+/gate/source/background/gps/radius 14.7 cm
+/gate/source/background/gps/halfz  10.7 cm
+/gate/source/background/gps/angtype  iso
+/gate/source/background/gps/centre  0.0 0.0 0.0 cm
+/gate/source/background/gps/Forbid fill10
+/gate/source/background/gps/Forbid fill10in
+/gate/source/background/gps/Forbid sphere10
+/gate/source/background/gps/Forbid sphere10in
+/gate/source/background/gps/Forbid fill13
+/gate/source/background/gps/Forbid fill13in
+/gate/source/background/gps/Forbid sphere13
+/gate/source/background/gps/Forbid sphere13in
+/gate/source/background/gps/Forbid fill17
+/gate/source/background/gps/Forbid fill17in
+/gate/source/background/gps/Forbid sphere17
+/gate/source/background/gps/Forbid sphere17in
+/gate/source/background/gps/Forbid fill22
+/gate/source/background/gps/Forbid fill22in
+/gate/source/background/gps/Forbid sphere22
+/gate/source/background/gps/Forbid sphere22in
+/gate/source/background/gps/Forbid fill28
+/gate/source/background/gps/Forbid fill28in
+/gate/source/background/gps/Forbid sphere28
+/gate/source/background/gps/Forbid sphere28in
+/gate/source/background/gps/Forbid fill37
+/gate/source/background/gps/Forbid fill37in
+/gate/source/background/gps/Forbid sphere37
+/gate/source/background/gps/Forbid sphere37in
+
+#/gate/source/background/dump 1
+/gate/source/background/visualize 2000 yellow 3
+/gate/source/list
+
+
+/gate/source/addSource   sphere10
+/gate/source/sphere10/setActivity    42 becquerel
+/gate/source/sphere10/gps/particle  gamma
+/gate/source/sphere10/gps/energytype Mono
+/gate/source/sphere10/setType backtoback
+/gate/source/sphere10/gps/monoenergy 0.511 MeV
+/gate/source/sphere10/gps/type   Volume
+/gate/source/sphere10/gps/shape  Sphere
+/gate/source/sphere10/gps/radius 0.5 cm
+/gate/source/sphere10/gps/angtype  iso
+/gate/source/sphere10/gps/centre  2.86 8.45367 3.7 cm
+/gate/source/sphere10/visualize 2000 red 3
+/gate/source/list
+
+/gate/source/addSource   sphere13
+/gate/source/sphere13/setActivity    92 becquerel
+/gate/source/sphere13/gps/particle  gamma
+/gate/source/sphere13/gps/energytype Mono
+/gate/source/sphere13/setType backtoback
+/gate/source/sphere13/gps/monoenergy 0.511 MeV
+/gate/source/sphere13/gps/type   Volume
+/gate/source/sphere13/gps/shape  Sphere
+/gate/source/sphere13/gps/radius 0.65 cm
+/gate/source/sphere13/gps/angtype  iso
+/gate/source/sphere13/gps/centre  -2.86 8.45367 3.7 cm
+/gate/source/sphere13/visualize 2000 red 3
+/gate/source/list
+
+/gate/source/addSource   sphere17
+/gate/source/sphere17/setActivity    205 becquerel
+/gate/source/sphere17/gps/particle  gamma
+/gate/source/sphere17/gps/energytype Mono
+/gate/source/sphere17/setType backtoback
+/gate/source/sphere17/gps/monoenergy 0.511 MeV
+/gate/source/sphere17/gps/type   Volume
+/gate/source/sphere17/gps/shape  Sphere
+/gate/source/sphere17/gps/radius 0.85 cm
+/gate/source/sphere17/gps/angtype  iso
+/gate/source/sphere17/gps/centre  -5.72 3.5 3.7 cm
+/gate/source/sphere17/visualize 2000 red 3
+/gate/source/list
+
+/gate/source/addSource   sphere22
+/gate/source/sphere22/setActivity    446 becquerel
+
+/gate/source/sphere22/gps/particle  gamma
+/gate/source/sphere22/gps/energytype Mono
+/gate/source/sphere22/setType backtoback
+/gate/source/sphere22/gps/monoenergy 0.511 MeV
+/gate/source/sphere22/gps/type   Volume
+/gate/source/sphere22/gps/shape  Sphere
+/gate/source/sphere22/gps/radius 1.1 cm
+/gate/source/sphere22/gps/angtype  iso
+/gate/source/sphere22/gps/centre  -2.86 -1.45366 3.7 cm
+/gate/source/sphere22/visualize 2000 red 3
+/gate/source/list
+
+
